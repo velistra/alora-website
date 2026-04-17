@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alora Summit 3.0 | 2026</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Times New Roman", Times, serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --soft-gray: #f9f9f9;
+            --nav-height: 80px;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            min-height: var(--nav-height);
+            padding: 10px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-logo-container {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            padding: 8px 12px;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            border-radius: 50px;
+            border: 1px solid var(--black);
+            color: var(--black);
+            white-space: nowrap;
+        }
+
+        .btn-register-top {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .hero {
+            min-height: 85vh;
+            padding: calc(var(--nav-height) + 40px) 5% 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-logo-circle {
+            width: clamp(160px, 45vw, 220px);
+            height: clamp(160px, 45vw, 220px);
+            border-radius: 50%;
+            margin-bottom: 30px;
+            border: 1px solid var(--black);
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0; 
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .hero-logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            letter-spacing: clamp(4px, 1.2vw, 10px);
+            text-transform: uppercase;
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        .info-strip {
+            background: var(--black);
+            color: var(--white);
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .committee-section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .comm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .comm-card {
+            background: var(--soft-gray);
+            padding: 40px 30px;
+            border-radius: 24px;
+            transition: all 0.4s ease;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .comm-card:hover {
+            transform: translateY(-5px);
+            background: var(--white);
+            border-color: var(--black);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .comm-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e0e0e0;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        #register-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 2000;
+            padding: 40px 5%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reg-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .reg-box {
+            padding: 18px;
+            border: 1px solid var(--black);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .reg-box:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        @media (max-width: 480px) {
+            .nav-btn { font-size: 0.55rem; padding: 6px 10px; }
+            .info-strip { flex-direction: column; gap: 10px; }
+            .comm-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo-container">
+            <img src="aloracropped.png" alt="Alora Logo">
+        </div>
+        <div class="nav-right">
+            <a href="alora3.0.pdf" target="_blank" class="nav-btn">Brochure</a>
+            <a href="https://docs.google.com/spreadsheets/d/1VEKafvPZaWzBkimF1W9Fey15cVvXPX_A-jyp_cSD6TQ/edit?gid=0#gid=0" target="_blank" class="nav-btn">Matrix</a>
+            <a href="javascript:void(0)" onclick="toggleRegister(true)" class="nav-btn btn-register-top">Register</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-logo-circle" data-aos="zoom-in">
+            <img src="aloracropped.png" alt="Alora Logo">
+        </div>
+        <h1 data-aos="fade-up">Alora Summit 3.0</h1>
+    </header>
+
+    <div class="info-strip">
+        <span>Noida / Delhi NCR</span>
+        <span>•</span>
+        <span>22-23 August 2026</span>
+    </div>
+
+    <section class="committee-section">
+        <h2 class="section-title" data-aos="fade-up">Agendas</h2>
+        <div class="comm-grid">
+            
+            <div class="comm-card" data-aos="fade-up">
+                <h3>UNCSW</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.7;">United Nations Commission on the Status of Women [Double Delegation]</p>
+                <p>Deliberation upon gender-based economic disparities in consumer markets, with special emphasis on the ‘pink tax’.</p>
+            </div>
+
+            <div class="comm-card" data-aos="fade-up">
+                <span class="badge">Beginner Friendly (Max 6 Exp)</span>
+                <h3>UNGA</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.7;">United Nations General Assembly</p>
+                <p>Deliberation on strengthening global cybersecurity frameworks in the age of AI, with special emphasis on autonomous cyber warfare.</p>
+            </div>
+
+            <div class="comm-card" data-aos="fade-up">
+                <h3>UNHRC</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.7;">United Nations Human Rights Council</p>
+                <p>Deliberation on violations of international humanitarian law in occupied and conflict territories with special emphasis on war crimes.</p>
+            </div>
+
+            <div class="comm-card" data-aos="fade-up">
+                <h3>UNSC</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.7;">United Nations Security Council</p>
+                <p>Deliberation upon the escalation of conflict in the Middle East with special emphasis on the Iran-Israel proxy warfare.</p>
+            </div>
+
+            <div class="comm-card" data-aos="fade-up">
+                <h3>AIPPM</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 8px; opacity: 0.7;">All India Political Parties Meet</p>
+                <p>Deliberation upon the legal recognition of same-sex marriages in India with emphasis on constitutional morality and federal dynamics.</p>
+            </div>
+
+            <div class="comm-card" data-aos="fade-up">
+                <h3>International Press</h3>
+                <ul style="list-style: none; margin-top: 10px; font-weight: bold; font-size: 0.9rem;">
+                    <li>• Photographer</li>
+                    <li>• Caricaturist</li>
+                    <li>• Journalist</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div data-aos="fade-up">
+            <p style="opacity: 0.5; text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 10px;">Queries</p>
+            <h4 style="font-weight: 400; font-size: 1.8rem;">Mr. Mitesh Garg</h4>
+            <p style="font-size: 1.2rem; opacity: 0.9;">+91 9910129141</p>
+        </div>
+        <p style="margin-top: 50px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 1px;">© 2026 ALORA SUMMIT MUN</p>
+    </footer>
+
+    <div id="register-overlay">
+        <button onclick="toggleRegister(false)" style="position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 2rem; cursor: pointer;">✕</button>
+        <h2 class="section-title">Register</h2>
+        <div class="reg-options">
+            <a href="#" target="_blank" class="reg-box">Secretariat</a>
+            <a href="#" target="_blank" class="reg-box">Delegate</a>
+            <a href="#" target="_blank" class="reg-box">Double Delegation</a>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ 
+            duration: 800, 
+            once: true,
+            disable: window.innerWidth < 768 
+        });
+
+        function toggleRegister(show) {
+            const overlay = document.getElementById('register-overlay');
+            overlay.style.display = show ? 'flex' : 'none';
+            document.body.style.overflow = show ? 'hidden' : 'auto';
+        }
+    </script>
+</body>
+</html>
